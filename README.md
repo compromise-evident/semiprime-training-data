@@ -27,7 +27,7 @@ if this was testing-data, your model cracked RSA if it can classify
 every string by the preceding label digit.
 Want evidence that these are are semiprimes?
 Go to wolframalpha.com and say
-"factor 1415020064050850383861594463040864050023"
+"factor 1415020064050850383861594463040864050023".
 
 ```text
 
@@ -134,4 +134,4 @@ Go to wolframalpha.com and say
 <br>
 <br>
 
-<p align="center"><sub>Nomenclature you should know: p & q are prime, p × q is semiprime (denoted pq.) p & q are factors of pq. Given only pq, it's statistically hard to find p & q.<sub/></p>
+<p align="center"><sub>Nomenclature: p & q are prime, p × q is semiprime (denoted pq.) p & q are factors of pq. Given only pq, it's statistically hard to find p & q.<sub/></p>
