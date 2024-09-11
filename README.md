@@ -8,7 +8,7 @@ commands in Geany, or then compile using ```g++ /path_to_this.cpp -lgmp```
 ## Prove RSA is cracked when a model aces your generated testing-data
 
 <p align="center">
-  <img src="">
+  <img src="https://raw.githubusercontent.com/compromise-evident/semiprime-training-data/main/Other/Configurable.png">
 </p>
 
 <br>
@@ -28,9 +28,6 @@ every string by the preceding label digit.
 Want evidence that these are are semiprimes?
 Go to wolframalpha.com and say
 "factor 1415020064050850383861594463040864050023"
-
-
-wolfram alpha
 
 ```text
 
@@ -74,6 +71,8 @@ wolfram alpha
 0 286607721815353476879643968648814656807133337764229547521
 1 2866077218153534768796439686488146568071333377642295475210
 3 28660772181535347687964396864881465680713333776422954752101
+.
+.
 .
 .
 .
@@ -124,6 +123,8 @@ wolfram alpha
 0 00286607721815353476879643968648814656807133337764229547521
 1 02866077218153534768796439686488146568071333377642295475210
 3 28660772181535347687964396864881465680713333776422954752101
+.
+.
 .
 .
 .
