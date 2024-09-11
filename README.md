@@ -79,7 +79,7 @@ Go to wolframalpha.com and say
 
 ```
 
-## Generates also padded with 0 but you can choose the padding_character
+## Generates also padded with 0 (choose your padding_character)
 
 ```text
 
