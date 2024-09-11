@@ -135,3 +135,5 @@ Go to wolframalpha.com and say
 <br>
 
 <p align="center"><sub>Nomenclature: p & q are prime, p × q is semiprime (denoted pq.) p & q are factors of pq. Given only pq, it's statistically hard to find p & q.<sub/></p>
+<p align="center"><sub>RSA uses p and q of equal and nearly equal length. Resulting pq is twice the length, hence these 40-digit samples have factors of 20 digits.<sub/></p>
+<p align="center"><sub>Not all p and q of equal lengths result in pq of exactly twice the length, hence "pq_length" can be set as needed.<sub/></p>
