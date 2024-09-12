@@ -2,6 +2,9 @@ semiprime-training-data
 
 
 
+Version 4.0.1   Generates primes+composites in random order, not 10101010101010.
+                Sep 12 2024
+
 Version 4.0.0   Option to generate primes+composites, for ML recognizing primes.
                 Sep 12 2024
 
