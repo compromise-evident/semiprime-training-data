@@ -1,0 +1,15 @@
+semiprime-training-data
+
+
+
+Version 4.0.0   Option to generate primes+composites, for ML recognizing primes.
+                Sep 12 2024
+
+Version 3.0.0   Complete re-write, the  "holy cow"  version. Made to match style
+                of my ezMNIST. "Generates any training-data & testing-data which
+                is semiprimes followed by  more and more  digits of the  smaller
+                factor (all preceded by 1 label digit, as text,padded,unpadded.)
+                Sep 10 2024
+
+Version 2.0.0   I'm open to adding rolling-code for secure p[] & q[] randomness.
+                Aug 17 2024
