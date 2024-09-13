@@ -8,7 +8,7 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 <br>
 <br>
 
-## Prove RSA is cracked when a model aces your generated testing-data
+## Prove RSA is cracked when a model aces your generated test.txt
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/compromise-evident/semiprime-training-data/main/Other/Configurable_781a1d3c777505b1a23134b891a80d30.png">
