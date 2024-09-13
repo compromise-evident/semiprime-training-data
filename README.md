@@ -1,9 +1,5 @@
-Requirement: GNU Multiple Precision Arithmetic Library.
-Just do ```apt install libgmp-dev``` then append "-lgmp" to both compile & build
-commands in Geany, or then compile using ```g++ /path_to_this.cpp -lgmp```
-
-<br>
-<br>
+Run it: ```apt install g++ geany libgmp-dev libdlib-dev```. Open the .cpp in Geany.<br>
+Append ```-lgmp -ldlib``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 
 ## Prove RSA is cracked when a model aces your generated testing-data
 
