@@ -133,7 +133,7 @@ Go to wolframalpha.com and say
 
 ```
 
-## Option 2 generates primes+composites: 1=prime 0=composite
+## Or generate primes+composites: 1=prime 0=composite
 
 ```text
 
