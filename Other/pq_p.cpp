@@ -1,5 +1,5 @@
-//Generates any training-data which is semiprimes                               Run it: "apt install g++ geany libgmp-dev". Append "-lgmp" to Geany's compile & build
-//followed by their smaller factor whole.                                       commands. Open this in Geany. Hit F9 once. F5 to run. Or compile: g++ /this.cpp -lgmp
+//Generates any training-data which is semiprimes                               Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
+//followed by their smaller factor whole.                                       Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
 
 #include <fstream>
 #include <gmp.h>
