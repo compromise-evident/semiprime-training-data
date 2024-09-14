@@ -2,7 +2,7 @@
 ///                           semiprimes followed by more and more              Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
 ///                           digits of the smaller factor, each
 ///                           line starting with one label digit.
-///                           Or get primes & composites.
+///                           Get also primes & composites.
 
 
 // Version 4.0.1
