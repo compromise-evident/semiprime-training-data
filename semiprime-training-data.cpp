@@ -1,7 +1,7 @@
 /// semiprime-training-data - creates train.txt & test.txt with any             Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
 ///                           semiprimes followed by more and more              Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
 ///                           digits of the smaller factor, each
-///                           line preceded by one label digit.
+///                           line starting with one label digit.
 ///                           Or get primes & composites.
 
 
