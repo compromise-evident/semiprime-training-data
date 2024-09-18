@@ -27,7 +27,6 @@ int main()
 	int                           p_length =    20; //50k  max
 	int                           q_length =    20; //50k  max
 	int                          pq_length =    40; //100k max
-	int                  padding_character =    48; //0 to 255
 	int             semiprimes_for_testing =  1000; //2B   max
 	int            semiprimes_for_training = 50000; //2B   max
 	
@@ -71,14 +70,10 @@ int main()
 		mpz_t prime_p   ; mpz_init(prime_p   );
 		mpz_t prime_q   ; mpz_init(prime_q   );
 		mpz_t product   ; mpz_init(product   );
-		system("mkdir padded");
-		out_stream.open(               "test.txt"); out_stream.close();
-		out_stream.open(              "train.txt"); out_stream.close();
-		out_stream.open( "padded/test-padded.txt"); out_stream.close();
-		out_stream.open("padded/train-padded.txt"); out_stream.close();
 		
 		//Testing-data.
 		cout << "\nGenerating testing-data...\n";
+		out_stream.open("test.txt");
 		for(int loops = 0; loops < semiprimes_for_testing;)
 		{	for(int a = 0; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}     if(p[0] == '0') {p[0] = '9';} //Random p.
 			for(int a = 0; a < q_length; a++) {q[a] = ((rand() % 10) + 48);}     if(q[0] == '0') {q[0] = '9';} //Random q.
@@ -93,30 +88,20 @@ int main()
 			if(prime_comparison < 0) {for(int a = 0; a < p_length; a++) {pq[pq_write_bookmark] = p[a]; pq_write_bookmark++;}}
 			else                     {for(int a = 0; a < q_length; a++) {pq[pq_write_bookmark] = q[a]; pq_write_bookmark++;}}
 			
-			//Saves padded to file.
-			out_stream.open("padded/test-padded.txt", ios::app);
-			for(int pq_read_bookmark = pq_length; pq[pq_read_bookmark] != '\0'; pq_read_bookmark++)
-			{	out_stream << pq[pq_read_bookmark] << " "; //Label first.
-				for(int a = pq_read_bookmark + 1; pq[a] != '\0'; a++) {out_stream.put(padding_character);} //Padding.
-				for(int a = 0; a < pq_read_bookmark; a++) {out_stream << pq[a];} //The rest.
-				out_stream << "\n";
-			}
-			out_stream.close();
-			
-			//Saves unpadded to file.
-			out_stream.open("test.txt", ios::app);
+			//Saves to file.
 			for(int pq_read_bookmark = pq_length; pq[pq_read_bookmark] != '\0'; pq_read_bookmark++)
 			{	out_stream << pq[pq_read_bookmark] << " "; //Label first.
 				for(int a = 0; a < pq_read_bookmark; a++) {out_stream << pq[a];} //The rest.
 				out_stream << "\n";
 			}
-			out_stream.close();
 			
 			loops++; cout << loops << " of " << semiprimes_for_testing << "\n";
 		}
+		out_stream.close();
 		
 		//Training-data (ditto but unique items.)
 		cout << "\nGenerating training-data...\n";
+		out_stream.open("train.txt");
 		for(int loops = 0; loops < semiprimes_for_training;)
 		{	for(int a = 0; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}     if(p[0] == '0') {p[0] = '9';} //Random p.
 			for(int a = 0; a < q_length; a++) {q[a] = ((rand() % 10) + 48);}     if(q[0] == '0') {q[0] = '9';} //Random q.
@@ -131,27 +116,16 @@ int main()
 			if(prime_comparison < 0) {for(int a = 0; a < p_length; a++) {pq[pq_write_bookmark] = p[a]; pq_write_bookmark++;}}
 			else                     {for(int a = 0; a < q_length; a++) {pq[pq_write_bookmark] = q[a]; pq_write_bookmark++;}}
 			
-			//Saves padded to file.
-			out_stream.open("padded/train-padded.txt", ios::app);
-			for(int pq_read_bookmark = pq_length; pq[pq_read_bookmark] != '\0'; pq_read_bookmark++)
-			{	out_stream << pq[pq_read_bookmark] << " "; //Label first.
-				for(int a = pq_read_bookmark + 1; pq[a] != '\0'; a++) {out_stream.put(padding_character);} //Padding.
-				for(int a = 0; a < pq_read_bookmark; a++) {out_stream << pq[a];} //The rest.
-				out_stream << "\n";
-			}
-			out_stream.close();
-			
-			//Saves unpadded to file.
-			out_stream.open("train.txt", ios::app);
+			//Saves to file.
 			for(int pq_read_bookmark = pq_length; pq[pq_read_bookmark] != '\0'; pq_read_bookmark++)
 			{	out_stream << pq[pq_read_bookmark] << " "; //Label first.
 				for(int a = 0; a < pq_read_bookmark; a++) {out_stream << pq[a];} //The rest.
 				out_stream << "\n";
 			}
-			out_stream.close();
 			
 			loops++; cout << loops << " of " << semiprimes_for_training << "\n";
 		}
+		out_stream.close();
 	}
 	
 	
