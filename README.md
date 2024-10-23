@@ -11,7 +11,7 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 ## Prove RSA is cracked when a model aces your generated test.txt
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/semiprime-training-data/refs/heads/main/Other/Configurable_a79518ae5d8247c8020b0239147714df.png">
+  <img src="https://raw.githubusercontent.com/compromise-evident/semiprime-training-data/refs/heads/main/Other/Configurable_171c458e87a66c39832a42453f9a1f37.png">
 </p>
 
 <br>
