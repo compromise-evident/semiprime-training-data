@@ -1,11 +1,9 @@
-/// semiprime-training-data - creates train.txt & test.txt with any             Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
-///                           semiprimes followed by more and more              Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
-///                           digits of the smaller factor, each
-///                           line starting with one label digit.
-///                           Get also primes & composites.
+// semiprime-training-data 5.0.0 - creates any semiprimes followed by           Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
+//                                 more and more digits of the smaller          Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
+//                                 factor, each line starting with label
+//                                 digit. Get also primes & composites.
+//                                 Creates raw, and tokenized for ML.py.
 
-
-// Version 4.0.1
 #include <fstream>
 #include <gmp.h>
 #include <iostream>
@@ -28,12 +26,25 @@ int main()
 	int                           q_length =    20; //50k  max
 	int                          pq_length =    40; //100k max
 	int             semiprimes_for_testing =  1000; //2B   max
-	int            semiprimes_for_training = 50000; //2B   max
+	int            semiprimes_for_training = 10000; //2B   max
 	
 	//                               Primes+composites
-	int         prime_and_composite_length =    59; //50k  max
+	int         prime_and_composite_length =    20; //50k  max
 	int  primes_and_composites_for_testing = 10000; //2B   max
 	int primes_and_composites_for_training = 90000; //2B   max
+	
+	//                                    Tokenize
+	char               tokenized_digit_0[] = {"@-----------"};
+	char               tokenized_digit_1[] = {"@-@---------"};
+	char               tokenized_digit_2[] = {"@-@@--------"};
+	char               tokenized_digit_3[] = {"@-@@@-------"};
+	char               tokenized_digit_4[] = {"@-@@@@------"};
+	char               tokenized_digit_5[] = {"@-@@@@@-----"};
+	char               tokenized_digit_6[] = {"@-@@@@@@----"};
+	char               tokenized_digit_7[] = {"@-@@@@@@@---"};
+	char               tokenized_digit_8[] = {"@-@@@@@@@@--"};
+	char               tokenized_digit_9[] = {"@-@@@@@@@@@-"};
+	bool   mask_end_of_final_string_with_one_at_symbol = true;
 	
 	/*////////////////                                        \\\\\\\\\\\\\\\\\\
 	///////////////////////                              \\\\\\\\\\\\\\\\\\\\\\\
@@ -47,14 +58,17 @@ int main()
 	/////////////////////////////////////  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	//////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
 	
+	ifstream in_stream;
 	ofstream out_stream;
 	
-	cout << "\n(1) Generate new semiprimes+factors, ezMNIST style."
-	     << "\n(2) Generate new primes+composites, ezMNIST style."
+	cout << "\n(1) Generate new semiprimes & factors."
+	     << "\n(2) Generate new primes & composites."
 	
 	     << "\n\nOption: ";
 	
 	int user_option; cin >> user_option; if((user_option != 1) && (user_option != 2)) {cout << "\nInvalid.\n"; return 0;}
+	system("mkdir training-data     -p");
+	system("mkdir training-data/raw -p");
 	
 	
 	
@@ -73,7 +87,7 @@ int main()
 		
 		//Testing-data.
 		cout << "\nGenerating testing-data...\n";
-		out_stream.open("test.txt");
+		out_stream.open("training-data/raw/test.txt");
 		for(int loops = 0; loops < semiprimes_for_testing;)
 		{	for(int a = 0; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}     if(p[0] == '0') {p[0] = '9';} //Random p.
 			for(int a = 0; a < q_length; a++) {q[a] = ((rand() % 10) + 48);}     if(q[0] == '0') {q[0] = '9';} //Random q.
@@ -101,7 +115,7 @@ int main()
 		
 		//Training-data (ditto but unique items.)
 		cout << "\nGenerating training-data...\n";
-		out_stream.open("train.txt");
+		out_stream.open("training-data/raw/train.txt");
 		for(int loops = 0; loops < semiprimes_for_training;)
 		{	for(int a = 0; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}     if(p[0] == '0') {p[0] = '9';} //Random p.
 			for(int a = 0; a < q_length; a++) {q[a] = ((rand() % 10) + 48);}     if(q[0] == '0') {q[0] = '9';} //Random q.
@@ -142,7 +156,7 @@ int main()
 		
 		//Testing-data.
 		cout << "\nGenerating testing-data...\n";
-		out_stream.open("test.txt");
+		out_stream.open("training-data/raw/test.txt");
 		for(int loops = 0; loops < primes_and_composites_for_testing;)
 		{	int which_one = (rand() % 2);
 			if(which_one == 0)
@@ -165,7 +179,7 @@ int main()
 		
 		//Training-data (ditto but unique items.)
 		cout << "\nGenerating training-data...\n";
-		out_stream.open("train.txt");
+		out_stream.open("training-data/raw/train.txt");
 		for(int loops = 0; loops < primes_and_composites_for_training;)
 		{	int which_one = (rand() % 2);
 			if(which_one == 0)
@@ -186,4 +200,65 @@ int main()
 		}
 		out_stream.close();
 	}
+	
+	
+	
+	
+	
+	//____________________________________________________Tokenize____________________________________________________//
+	cout << "\nCreating tokenized versions of the raw test.txt and train.txt...\n";
+	char file_byte;
+	in_stream.open("training-data/raw/test.txt");
+	out_stream.open("training-data/test.txt");
+	in_stream.get(file_byte);
+	for(; in_stream.eof() == false;)
+	{	out_stream.put(file_byte); out_stream << " "; in_stream.get(file_byte); in_stream.get(file_byte);
+		for(; file_byte != '\n';)
+		{	if     (file_byte == '0') {out_stream << tokenized_digit_0;}
+			else if(file_byte == '1') {out_stream << tokenized_digit_1;}
+			else if(file_byte == '2') {out_stream << tokenized_digit_2;}
+			else if(file_byte == '3') {out_stream << tokenized_digit_3;}
+			else if(file_byte == '4') {out_stream << tokenized_digit_4;}
+			else if(file_byte == '5') {out_stream << tokenized_digit_5;}
+			else if(file_byte == '6') {out_stream << tokenized_digit_6;}
+			else if(file_byte == '7') {out_stream << tokenized_digit_7;}
+			else if(file_byte == '8') {out_stream << tokenized_digit_8;}
+			else if(file_byte == '9') {out_stream << tokenized_digit_9;}
+			else                      {cout << "\n\nError: non-digits present.\n\n"; return 0;}
+			
+			in_stream.get(file_byte);
+		}
+		if(mask_end_of_final_string_with_one_at_symbol == true) {out_stream << "@";}
+		out_stream << "\n";
+		in_stream.get(file_byte);
+	}
+	in_stream.close();
+	out_stream.close();
+	
+	in_stream.open("training-data/raw/train.txt");
+	out_stream.open("training-data/train.txt");
+	in_stream.get(file_byte);
+	for(; in_stream.eof() == false;)
+	{	out_stream.put(file_byte); out_stream << " "; in_stream.get(file_byte); in_stream.get(file_byte);
+		for(; file_byte != '\n';)
+		{	if     (file_byte == '0') {out_stream << tokenized_digit_0;}
+			else if(file_byte == '1') {out_stream << tokenized_digit_1;}
+			else if(file_byte == '2') {out_stream << tokenized_digit_2;}
+			else if(file_byte == '3') {out_stream << tokenized_digit_3;}
+			else if(file_byte == '4') {out_stream << tokenized_digit_4;}
+			else if(file_byte == '5') {out_stream << tokenized_digit_5;}
+			else if(file_byte == '6') {out_stream << tokenized_digit_6;}
+			else if(file_byte == '7') {out_stream << tokenized_digit_7;}
+			else if(file_byte == '8') {out_stream << tokenized_digit_8;}
+			else if(file_byte == '9') {out_stream << tokenized_digit_9;}
+			else                      {cout << "\n\nError: non-digits present.\n\n"; return 0;}
+			
+			in_stream.get(file_byte);
+		}
+		if(mask_end_of_final_string_with_one_at_symbol == true) {out_stream << "@";}
+		out_stream << "\n";
+		in_stream.get(file_byte);
+	}
+	in_stream.close();
+	out_stream.close();
 }
