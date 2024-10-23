@@ -2,7 +2,7 @@ Run it: ```apt install g++ geany libgmp-dev```. Open the .cpp in Geany.<br>
 Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/semiprime-training-data/main/Other/Terminal_baa56c42a4f58b5fcc4aca2d732f28d7.png">
+  <img src="https://raw.githubusercontent.com/compromise-evident/semiprime-training-data/refs/heads/main/Other/Terminal_185741c7e10e3213acd4d6638f5adf0e.png">
 </p>
 
 <br>
@@ -11,7 +11,7 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 ## Prove RSA is cracked when a model aces your generated test.txt
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/semiprime-training-data/refs/heads/main/Other/Configurable_48156b608a639e1283720d079709cb7c.png">
+  <img src="https://raw.githubusercontent.com/compromise-evident/semiprime-training-data/refs/heads/main/Other/Configurable_a79518ae5d8247c8020b0239147714df.png">
 </p>
 
 <br>
