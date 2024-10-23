@@ -2,6 +2,9 @@ semiprime-training-data
 
 
 
+Version 5.0.0   Makes tokenized version for ML.py. It's configurable in the cpp.
+                Oct 23 2024
+
 Version 4.0.1   Generates primes+composites in random order, not 10101010101010.
                 Sep 12 2024
 
