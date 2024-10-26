@@ -2,6 +2,10 @@ semiprime-training-data
 
 
 
+Version 5.1.0   Option 3 - get plain semiprimes labeled with  first digit of the
+                smaller factor. (All options are created raw, and ML-tokenized.)
+                Oct 25 2024
+
 Version 5.0.0   Makes tokenized version for ML.py. It's configurable in the cpp.
                 Oct 23 2024
 
