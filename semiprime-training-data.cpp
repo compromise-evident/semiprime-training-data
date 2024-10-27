@@ -1,7 +1,7 @@
-// semiprime-training-data 5.1.0 - creates any semiprimes followed by           Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
-//                                 more and more digits of the smaller          Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
-//                                 factor, each line starting with label
-//                                 digit. Get also primes & composites.
+// semiprime-training-data 5.1.1 - generates any semiprimes labeled as          Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
+//                                 the first digit of their smaller             Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
+//                                 factor. Get also primes & composites,
+//                                 and semiprimes with expanding factors.
 //                                 Creates raw, and tokenized for ML.py.
 
 #include <fstream>
@@ -22,11 +22,11 @@ int main()
 	\\\\\\\\\\\\\\\\\\                                        ////////////////*/
 	
 	//                               Semiprimes+factors
-	int                           p_length =    20; //50k  max
-	int                           q_length =    20; //50k  max
-	int                          pq_length =    40; //100k max
-	int             semiprimes_for_testing =  1000; //2B   max
-	int            semiprimes_for_training = 10000; //2B   max
+	int                           p_length =    10; //50k  max
+	int                           q_length =    10; //50k  max
+	int                          pq_length =    20; //100k max
+	int             semiprimes_for_testing = 10000; //2B   max
+	int            semiprimes_for_training = 90000; //2B   max
 	
 	//                               Primes+composites
 	int         prime_and_composite_length =    20; //50k  max
@@ -61,10 +61,10 @@ int main()
 	ifstream in_stream;
 	ofstream out_stream;
 	
-	cout << "\n(1) Generate new semiprimes & factors."
-	     << "\n(2) Generate new primes & composites."
-	     << "\n(3) Generate new semiprimes labeled with"
-	     << "\n    first digit of the smaller factor."
+	cout << "\n(1) Generate new semiprimes labeled as the first digit of their smaller factor."
+	     << "\n(2) Generate new primes and composites labeled as 1 = prime, 0 = composite."
+	     << "\n(3) Generate new semiprimes followed by more and more digits of their"
+	     << "\n    smaller factor, labeled as the next digit of that same factor."
 	
 	     << "\n\nOption: ";
 	
@@ -98,18 +98,11 @@ int main()
 			mpz_mul(product, prime_p, prime_q);                                 mpz_get_str(pq, 10, product);  //pq made.
 			int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;} //Restarts if pq not pq_length.
 			
-			//Appends smaller prime to pq[].
-			int prime_comparison = mpz_cmp(prime_p, prime_q);
-			int pq_write_bookmark = pq_length;
-			if(prime_comparison < 0) {for(int a = 0; a < p_length; a++) {pq[pq_write_bookmark] = p[a]; pq_write_bookmark++;}}
-			else                     {for(int a = 0; a < q_length; a++) {pq[pq_write_bookmark] = q[a]; pq_write_bookmark++;}}
-			
 			//Saves to file.
-			for(int pq_read_bookmark = pq_length; pq[pq_read_bookmark] != '\0'; pq_read_bookmark++)
-			{	out_stream << pq[pq_read_bookmark] << " "; //Label first.
-				for(int a = 0; a < pq_read_bookmark; a++) {out_stream << pq[a];} //The rest.
-				out_stream << "\n";
-			}
+			int prime_comparison = mpz_cmp(prime_p, prime_q); //Label first.
+			if(prime_comparison < 0) {out_stream << p[0] << " ";}
+			else                     {out_stream << q[0] << " ";}
+			out_stream << pq << "\n"; //The rest.
 			
 			loops++; cout << loops << " of " << semiprimes_for_testing << "\n";
 		}
@@ -126,18 +119,11 @@ int main()
 			mpz_mul(product, prime_p, prime_q);                                 mpz_get_str(pq, 10, product);  //pq made.
 			int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;} //Restarts if pq not pq_length.
 			
-			//Appends smaller prime to pq[].
-			int prime_comparison = mpz_cmp(prime_p, prime_q);
-			int pq_write_bookmark = pq_length;
-			if(prime_comparison < 0) {for(int a = 0; a < p_length; a++) {pq[pq_write_bookmark] = p[a]; pq_write_bookmark++;}}
-			else                     {for(int a = 0; a < q_length; a++) {pq[pq_write_bookmark] = q[a]; pq_write_bookmark++;}}
-			
 			//Saves to file.
-			for(int pq_read_bookmark = pq_length; pq[pq_read_bookmark] != '\0'; pq_read_bookmark++)
-			{	out_stream << pq[pq_read_bookmark] << " "; //Label first.
-				for(int a = 0; a < pq_read_bookmark; a++) {out_stream << pq[a];} //The rest.
-				out_stream << "\n";
-			}
+			int prime_comparison = mpz_cmp(prime_p, prime_q); //Label first.
+			if(prime_comparison < 0) {out_stream << p[0] << " ";}
+			else                     {out_stream << q[0] << " ";}
+			out_stream << pq << "\n"; //The rest.
 			
 			loops++; cout << loops << " of " << semiprimes_for_training << "\n";
 		}
@@ -148,7 +134,7 @@ int main()
 	
 	
 	
-	//_______________________________________________________Primes___________________________________________________//
+	//________________________________________________Primes_composites_______________________________________________//
 	if(user_option == 2)
 	{	srand(time(0));
 		char p[50001] = {'\0'};
@@ -207,7 +193,7 @@ int main()
 	
 	
 	
-	//_________________________________________________Only_semiprimes________________________________________________//
+	//__________________________________________Semiprimes_expanding_factors__________________________________________//
 	if(user_option == 3)
 	{	srand(time(0));
 		char  p[ 50001] = {'\0'};
@@ -229,11 +215,18 @@ int main()
 			mpz_mul(product, prime_p, prime_q);                                 mpz_get_str(pq, 10, product);  //pq made.
 			int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;} //Restarts if pq not pq_length.
 			
+			//Appends smaller prime to pq[].
+			int prime_comparison = mpz_cmp(prime_p, prime_q);
+			int pq_write_bookmark = pq_length;
+			if(prime_comparison < 0) {for(int a = 0; a < p_length; a++) {pq[pq_write_bookmark] = p[a]; pq_write_bookmark++;}}
+			else                     {for(int a = 0; a < q_length; a++) {pq[pq_write_bookmark] = q[a]; pq_write_bookmark++;}}
+			
 			//Saves to file.
-			int prime_comparison = mpz_cmp(prime_p, prime_q); //Label first.
-			if(prime_comparison < 0) {out_stream << p[0] << " ";}
-			else                     {out_stream << q[0] << " ";}
-			out_stream << pq << "\n"; //The rest.
+			for(int pq_read_bookmark = pq_length; pq[pq_read_bookmark] != '\0'; pq_read_bookmark++)
+			{	out_stream << pq[pq_read_bookmark] << " "; //Label first.
+				for(int a = 0; a < pq_read_bookmark; a++) {out_stream << pq[a];} //The rest.
+				out_stream << "\n";
+			}
 			
 			loops++; cout << loops << " of " << semiprimes_for_testing << "\n";
 		}
@@ -250,11 +243,18 @@ int main()
 			mpz_mul(product, prime_p, prime_q);                                 mpz_get_str(pq, 10, product);  //pq made.
 			int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;} //Restarts if pq not pq_length.
 			
+			//Appends smaller prime to pq[].
+			int prime_comparison = mpz_cmp(prime_p, prime_q);
+			int pq_write_bookmark = pq_length;
+			if(prime_comparison < 0) {for(int a = 0; a < p_length; a++) {pq[pq_write_bookmark] = p[a]; pq_write_bookmark++;}}
+			else                     {for(int a = 0; a < q_length; a++) {pq[pq_write_bookmark] = q[a]; pq_write_bookmark++;}}
+			
 			//Saves to file.
-			int prime_comparison = mpz_cmp(prime_p, prime_q); //Label first.
-			if(prime_comparison < 0) {out_stream << p[0] << " ";}
-			else                     {out_stream << q[0] << " ";}
-			out_stream << pq << "\n"; //The rest.
+			for(int pq_read_bookmark = pq_length; pq[pq_read_bookmark] != '\0'; pq_read_bookmark++)
+			{	out_stream << pq[pq_read_bookmark] << " "; //Label first.
+				for(int a = 0; a < pq_read_bookmark; a++) {out_stream << pq[a];} //The rest.
+				out_stream << "\n";
+			}
 			
 			loops++; cout << loops << " of " << semiprimes_for_training << "\n";
 		}
