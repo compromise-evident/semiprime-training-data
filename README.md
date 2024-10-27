@@ -135,13 +135,6 @@ The second line has "2" appended to the semiprime. This second line must be
 classified under "9" because "9" is the second digit of that semiprime's
 smaller factor. And so on.
 
-Testing-data is the same but of unique semiprimes. For example,
-if this was testing-data, your model cracked RSA if it can classify
-every string under the preceding label digit.
-Want evidence that these are semiprimes?
-Go to wolframalpha.com and say
-"factor 1415020064050850383861594463040864050023".
-
 ```text
 
    label               semiprime                      factor
