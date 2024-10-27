@@ -2,6 +2,10 @@ semiprime-training-data
 
 
 
+Version 5.1.2   Excellent random distribution of labels for  option 1,  with the
+                cost of being slower to generate.  All distribution  looks good.
+                Oct 27 2024
+
 Version 5.1.1   Re-ordered options and made them clear, better description. It's
                 that important--enough to be a new version; I've had >50% on the
                 first option semiprime factorization, where I should have had 10
