@@ -1,4 +1,4 @@
-// semiprime-training-data 5.1.1 - generates any semiprimes labeled as          Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
+// semiprime-training-data 5.1.2 - generates any semiprimes labeled as          Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
 //                                 the first digit of their smaller             Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
 //                                 factor. Get also primes & composites,
 //                                 and semiprimes with expanding factors.
@@ -86,6 +86,7 @@ int main()
 		mpz_t prime_p   ; mpz_init(prime_p   );
 		mpz_t prime_q   ; mpz_init(prime_q   );
 		mpz_t product   ; mpz_init(product   );
+		int one_to_nine =  ((rand() % 9) + 49);
 		
 		//Testing-data.
 		cout << "\nGenerating testing-data...\n";
@@ -98,11 +99,16 @@ int main()
 			mpz_mul(product, prime_p, prime_q);                                 mpz_get_str(pq, 10, product);  //pq made.
 			int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;} //Restarts if pq not pq_length.
 			
+			//Restarts if label not distributed 1-9.
+			char label;
+			int prime_comparison = mpz_cmp(prime_p, prime_q);
+			if(prime_comparison < 0) {label = p[0];}
+			else                     {label = q[0];}
+			if(label != one_to_nine) {continue;}
+			one_to_nine = ((rand() % 9) + 49);
+			
 			//Saves to file.
-			int prime_comparison = mpz_cmp(prime_p, prime_q); //Label first.
-			if(prime_comparison < 0) {out_stream << p[0] << " ";}
-			else                     {out_stream << q[0] << " ";}
-			out_stream << pq << "\n"; //The rest.
+			out_stream << label << " " << pq << "\n"; //Label then semiprime.
 			
 			loops++; cout << loops << " of " << semiprimes_for_testing << "\n";
 		}
@@ -119,11 +125,16 @@ int main()
 			mpz_mul(product, prime_p, prime_q);                                 mpz_get_str(pq, 10, product);  //pq made.
 			int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;} //Restarts if pq not pq_length.
 			
+			//Restarts if label not distributed 1-9.
+			char label;
+			int prime_comparison = mpz_cmp(prime_p, prime_q);
+			if(prime_comparison < 0) {label = p[0];}
+			else                     {label = q[0];}
+			if(label != one_to_nine) {continue;}
+			one_to_nine = ((rand() % 9) + 49);
+			
 			//Saves to file.
-			int prime_comparison = mpz_cmp(prime_p, prime_q); //Label first.
-			if(prime_comparison < 0) {out_stream << p[0] << " ";}
-			else                     {out_stream << q[0] << " ";}
-			out_stream << pq << "\n"; //The rest.
+			out_stream << label << " " << pq << "\n"; //Label then semiprime.
 			
 			loops++; cout << loops << " of " << semiprimes_for_training << "\n";
 		}
