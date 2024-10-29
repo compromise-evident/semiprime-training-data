@@ -2,6 +2,10 @@ semiprime-training-data
 
 
 
+Version 5.1.4   Option 4 - pq label is length n.  (ML.py  has  success in this.)
+                Tokenization is now free to tokenize no matter the label length.
+                Oct 28 2024
+
 Version 5.1.3   Prime length safety; very short primes & semiprimes now allowed.
                 Oct 27 2024
 
