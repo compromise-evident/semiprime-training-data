@@ -1,4 +1,4 @@
-// semiprime-training-data 5.1.3 - generates any semiprimes labeled as          Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
+// semiprime-training-data 5.1.4 - generates any semiprimes labeled as          Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
 //                                 the first digit of their smaller             Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
 //                                 factor. Get also primes & composites,
 //                                 and semiprimes with expanding factors.
@@ -21,19 +21,19 @@ int main()
 	\\\\\\\\\\\\\\\\\\\\\\\                              ///////////////////////
 	\\\\\\\\\\\\\\\\\\                                        ////////////////*/
 	
-	//                               Semiprimes+factors
+	//                            Semiprimes+factors
 	int                           p_length =    10; //50k  max
 	int                           q_length =    10; //50k  max
 	int                          pq_length =    20; //100k max
 	int             semiprimes_for_testing = 10000; //2B   max
 	int            semiprimes_for_training = 90000; //2B   max
 	
-	//                               Primes+composites
+	//                            Primes+composites
 	int         prime_and_composite_length =    20; //50k  max
 	int  primes_and_composites_for_testing = 10000; //2B   max
 	int primes_and_composites_for_training = 90000; //2B   max
 	
-	//                                    Tokenize
+	//                                 Tokenize
 	char               tokenized_digit_0[] = {"@-----------"};
 	char               tokenized_digit_1[] = {"@-@---------"};
 	char               tokenized_digit_2[] = {"@-@@--------"};
@@ -45,6 +45,9 @@ int main()
 	char               tokenized_digit_8[] = {"@-@@@@@@@@--"};
 	char               tokenized_digit_9[] = {"@-@@@@@@@@@-"};
 	bool   mask_end_of_final_string_with_one_at_symbol = true;
+	
+	//                          Label length (option 4)
+	int                                  n = 2;
 	
 	/*////////////////                                        \\\\\\\\\\\\\\\\\\
 	///////////////////////                              \\\\\\\\\\\\\\\\\\\\\\\
@@ -61,14 +64,18 @@ int main()
 	ifstream in_stream;
 	ofstream out_stream;
 	
-	cout << "\n(1) Generate new semiprimes labeled as the first digit of their smaller factor."
+	cout << "\n(1) Generate new semiprimes labeled as the first digit of the smaller factor."
 	     << "\n(2) Generate new primes and composites labeled as 1 = prime, 0 = composite."
-	     << "\n(3) Generate new semiprimes followed by more and more digits of their"
-	     << "\n    smaller factor, labeled as the next digit of that same factor."
+	     << "\n(3) Generate new semiprimes followed by more and more digits of the"
+	     << "\n    smaller factor, labeled as the next digit of that same factor.\n"
+	     
+	     << "\n(4) Generate new semiprimes labeled as the first n"
+	     << "\n    digits of the smaller factor. n = 2 (default)"
+	     << "\n    so set classes = 100. Else classes = 10^n.\n\n\n\n"
 	
-	     << "\n\nOption: ";
+	     << "\nOption: ";
 	
-	int user_option; cin >> user_option; if((user_option != 1) && (user_option != 2) && (user_option != 3)) {cout << "\nInvalid.\n"; return 0;}
+	int user_option; cin >> user_option; if((user_option != 1) && (user_option != 2) && (user_option != 3) && (user_option != 4)) {cout << "\nInvalid.\n"; return 0;}
 	system("mkdir training-data     -p");
 	system("mkdir training-data/raw -p");
 	
@@ -282,6 +289,81 @@ int main()
 	
 	
 	
+	//______________________________________________Variable_length_label_____________________________________________//
+	if(user_option == 4)
+	{	srand(time(0));
+		char  p[ 50001] = {'\0'};
+		char  q[ 50001] = {'\0'};
+		char pq[200001] = {'\0'};
+		mpz_t randomness; mpz_init(randomness);
+		mpz_t prime_p   ; mpz_init(prime_p   );
+		mpz_t prime_q   ; mpz_init(prime_q   );
+		mpz_t product   ; mpz_init(product   );
+		int one_to_nine =  ((rand() % 9) + 49);
+		
+		//Testing-data.
+		cout << "\nGenerating testing-data...\n";
+		out_stream.open("training-data/raw/test.txt");
+		for(int loops = 0; loops < semiprimes_for_testing;)
+		{	for(int a = 0; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}     if(p[0] == '0') {p[0] = '1';}     //Random p.
+			for(int a = 0; a < q_length; a++) {q[a] = ((rand() % 10) + 48);}     if(q[0] == '0') {q[0] = '9';}     //Random q.
+			mpz_set_str(randomness, p, 10); mpz_nextprime(prime_p, randomness); mpz_get_str( p, 10, prime_p);      //p made prime.
+			mpz_set_str(randomness, q, 10); mpz_nextprime(prime_q, randomness); mpz_get_str( q, 10, prime_q);      //q made prime.
+			if((p[p_length] != '\0') || (q[q_length] != '\0')) {p[p_length] = '\0'; q[q_length] = '\0'; continue;} //Restarts if p or q too long.
+			mpz_mul(product, prime_p, prime_q);                                 mpz_get_str(pq, 10, product);      //pq made.
+			int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;}     //Restarts if pq not pq_length.
+			
+			//Restarts if first digit not distributed 1-9.
+			char first_digit;
+			int prime_comparison = mpz_cmp(prime_p, prime_q);
+			if(prime_comparison < 0) {first_digit = p[0];}
+			else                     {first_digit = q[0];}
+			if(first_digit != one_to_nine) {continue;}
+			one_to_nine = ((rand() % 9) + 49);
+			
+			//Saves to file.
+			if(prime_comparison < 0) {for(int a = 0; a < n; a++) {out_stream << p[a];}} //Label first.
+			else                     {for(int a = 0; a < n; a++) {out_stream << q[a];}} //Label first.
+			out_stream << " " << pq << "\n"; //Then semiprime.
+			
+			loops++; cout << loops << " of " << semiprimes_for_testing << "\n";
+		}
+		out_stream.close();
+		
+		//Training-data (ditto but unique items.)
+		cout << "\nGenerating training-data...\n";
+		out_stream.open("training-data/raw/train.txt");
+		for(int loops = 0; loops < semiprimes_for_training;)
+		{	for(int a = 0; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}     if(p[0] == '0') {p[0] = '1';}     //Random p.
+			for(int a = 0; a < q_length; a++) {q[a] = ((rand() % 10) + 48);}     if(q[0] == '0') {q[0] = '9';}     //Random q.
+			mpz_set_str(randomness, p, 10); mpz_nextprime(prime_p, randomness); mpz_get_str( p, 10, prime_p);      //p made prime.
+			mpz_set_str(randomness, q, 10); mpz_nextprime(prime_q, randomness); mpz_get_str( q, 10, prime_q);      //q made prime.
+			if((p[p_length] != '\0') || (q[q_length] != '\0')) {p[p_length] = '\0'; q[q_length] = '\0'; continue;} //Restarts if p or q too long.
+			mpz_mul(product, prime_p, prime_q);                                 mpz_get_str(pq, 10, product);      //pq made.
+			int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;}     //Restarts if pq not pq_length.
+			
+			//Restarts if first digit not distributed 1-9.
+			char first_digit;
+			int prime_comparison = mpz_cmp(prime_p, prime_q);
+			if(prime_comparison < 0) {first_digit = p[0];}
+			else                     {first_digit = q[0];}
+			if(first_digit != one_to_nine) {continue;}
+			one_to_nine = ((rand() % 9) + 49);
+			
+			//Saves to file.
+			if(prime_comparison < 0) {for(int a = 0; a < n; a++) {out_stream << p[a];}} //Label first.
+			else                     {for(int a = 0; a < n; a++) {out_stream << q[a];}} //Label first.
+			out_stream << " " << pq << "\n"; //Then semiprime.
+			
+			loops++; cout << loops << " of " << semiprimes_for_training << "\n";
+		}
+		out_stream.close();
+	}
+	
+	
+	
+	
+	
 	//____________________________________________________Tokenize____________________________________________________//
 	cout << "\nCreating tokenized versions of the raw test.txt and train.txt...\n";
 	char file_byte;
@@ -289,7 +371,9 @@ int main()
 	out_stream.open("training-data/test.txt");
 	in_stream.get(file_byte);
 	for(; in_stream.eof() == false;)
-	{	out_stream.put(file_byte); out_stream << " "; in_stream.get(file_byte); in_stream.get(file_byte);
+	{	for(; file_byte != ' ';) {out_stream.put(file_byte); in_stream.get(file_byte);}
+		out_stream << " "; in_stream.get(file_byte);
+		
 		for(; file_byte != '\n';)
 		{	if     (file_byte == '0') {out_stream << tokenized_digit_0;}
 			else if(file_byte == '1') {out_stream << tokenized_digit_1;}
@@ -301,10 +385,11 @@ int main()
 			else if(file_byte == '7') {out_stream << tokenized_digit_7;}
 			else if(file_byte == '8') {out_stream << tokenized_digit_8;}
 			else if(file_byte == '9') {out_stream << tokenized_digit_9;}
-			else                      {cout << "\n\nError: non-digits present.\n\n"; return 0;}
+			else                      {cout << "\n\nError: non-digits present.\n\n"; in_stream.close(); out_stream.close(); return 0;}
 			
 			in_stream.get(file_byte);
 		}
+		
 		if(mask_end_of_final_string_with_one_at_symbol == true) {out_stream << "@";}
 		out_stream << "\n";
 		in_stream.get(file_byte);
@@ -316,7 +401,9 @@ int main()
 	out_stream.open("training-data/train.txt");
 	in_stream.get(file_byte);
 	for(; in_stream.eof() == false;)
-	{	out_stream.put(file_byte); out_stream << " "; in_stream.get(file_byte); in_stream.get(file_byte);
+	{	for(; file_byte != ' ';) {out_stream.put(file_byte); in_stream.get(file_byte);}
+		out_stream << " "; in_stream.get(file_byte);
+		
 		for(; file_byte != '\n';)
 		{	if     (file_byte == '0') {out_stream << tokenized_digit_0;}
 			else if(file_byte == '1') {out_stream << tokenized_digit_1;}
@@ -328,10 +415,11 @@ int main()
 			else if(file_byte == '7') {out_stream << tokenized_digit_7;}
 			else if(file_byte == '8') {out_stream << tokenized_digit_8;}
 			else if(file_byte == '9') {out_stream << tokenized_digit_9;}
-			else                      {cout << "\n\nError: non-digits present.\n\n"; return 0;}
+			else                      {cout << "\n\nError: non-digits present.\n\n"; in_stream.close(); out_stream.close(); return 0;}
 			
 			in_stream.get(file_byte);
 		}
+		
 		if(mask_end_of_final_string_with_one_at_symbol == true) {out_stream << "@";}
 		out_stream << "\n";
 		in_stream.get(file_byte);
