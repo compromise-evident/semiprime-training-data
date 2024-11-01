@@ -19,8 +19,8 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 
 ```text
 
-                                           actual factors for you
-   label    semiprime     bad candidate    (ignored by tokenizer)
+                                          actual factors, for you
+   label    semiprime    bad candidate   (ignored upon tokenizing)
      |          |               |                    |
 
      1 50595454897434471649_8090636973   (6470808299 * 7819031651)
@@ -76,7 +76,7 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 
 ```text
 
-   label    semiprime                                                                                                                                                                                                                                                               the off value
+   label    semiprime                                                                                                                                                                                                                                                               bad candidate
      |          |                                                                                                                                                                                                                                                                         |
 
      1 @-@@@@@-----@-----------@-@@@@@-----@-@@@@@@@@@-@-@@@@@-----@-@@@@------@-@@@@@-----@-@@@@------@-@@@@@@@@--@-@@@@@@@@@-@-@@@@@@@---@-@@@@------@-@@@-------@-@@@@------@-@@@@------@-@@@@@@@---@-@---------@-@@@@@@----@-@@@@------@-@@@@@@@@@-@-----------------------------@-@@@@@@@@--@-----------@-@@@@@@@@@-@-----------@-@@@@@@----@-@@@-------@-@@@@@@----@-@@@@@@@@@-@-@@@@@@@---@-@@@-------@
