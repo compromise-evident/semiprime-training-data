@@ -134,6 +134,9 @@ Obviously, the next objective is to modify ML.py
 to use these false values to zero-in on the smaller
 factor as much as possible, and the last few digits
 will see brute force.
+In fact, this is where consensus of multiple models
+would be most useful. I'll build an ML.py version
+just for that too.
 
 <br>
 <br>
