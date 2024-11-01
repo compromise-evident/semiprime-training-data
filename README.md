@@ -19,8 +19,8 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 
 ```text
 
-                                             reference for you
-   label    semiprime     the off value    (ignored by tokenizer)
+                                           actual factors for you
+   label    semiprime     bad candidate    (ignored by tokenizer)
      |          |               |                    |
 
      1 50595454897434471649_8090636973   (6470808299 * 7819031651)
