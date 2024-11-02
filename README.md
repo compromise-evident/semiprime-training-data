@@ -136,11 +136,10 @@ factor as much as possible, and the last few digits
 will see brute force.
 In fact, this is where consensus of multiple models
 would be most useful. I'll build an ML.py version
-just for that too.
+just for that too. Using my already-available StatMerge.
 
 <br>
 <br>
 
 <p align="center"><sub>Nomenclature: p & q are prime, p × q is semiprime (denoted pq.) p & q are factors of pq. Given only pq, it's statistically hard to find p & q.<sub/></p>
 <p align="center"><sub>RSA uses p & q of equal length. pq is then twice the length but not always. "pq_length = 40" discards any pq not 40 digits.<sub/></p>
-<p align="center"><sub>Here, 40-digit samples have two factors of 20 digits each, but you can set each length.<sub/></p>
