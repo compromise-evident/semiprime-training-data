@@ -1,7 +1,7 @@
-// semiprime-training-data 6.0.0 - generates any semiprimes followed            Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
-//                                 by values too big or too small to            Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
-//                                 be the smaller factor, all labeled
-//                                 1 or 0. Creates raw & tokenized.
+// semiprime-training-data 6.0.1 - generates any semiprimes labeled 1 or 0,             Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
+//                                 depending on if what follows the semiprime           Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
+//                                 is too big or too small to be the smaller
+//                                 factor. Creates raw, and tokenized for ML.py.
 
 #include <fstream>
 #include <gmp.h>
@@ -20,26 +20,26 @@ int main()
 	\\\\\\\\\\\\\\\\\\\\\\\                              ///////////////////////
 	\\\\\\\\\\\\\\\\\\                                        ////////////////*/
 	
-	//                                Semiprimes
-	int                           p_length =    10; //50k  max
-	int                           q_length =    10; //50k  max
-	int                          pq_length =    20; //100k max
-	int             semiprimes_for_testing = 10000; //2B   max
-	int            semiprimes_for_training = 90000; //2B   max
+	//                                  Semiprimes
+	int                             p_length =    10; //50k  max
+	int                             q_length =    10; //50k  max
+	int                            pq_length =    20; //100k max
+	int               semiprimes_for_testing = 10000; //2B   max
+	int              semiprimes_for_training = 90000; //2B   max
 	
-	//                                 Tokenize
-	char               tokenized_digit_0[] = {"@-----------"};
-	char               tokenized_digit_1[] = {"@-@---------"};
-	char               tokenized_digit_2[] = {"@-@@--------"};
-	char               tokenized_digit_3[] = {"@-@@@-------"};
-	char               tokenized_digit_4[] = {"@-@@@@------"};
-	char               tokenized_digit_5[] = {"@-@@@@@-----"};
-	char               tokenized_digit_6[] = {"@-@@@@@@----"};
-	char               tokenized_digit_7[] = {"@-@@@@@@@---"};
-	char               tokenized_digit_8[] = {"@-@@@@@@@@--"};
-	char               tokenized_digit_9[] = {"@-@@@@@@@@@-"};
-	char               tokenized_break  [] = {"@-----------------------------"};
-	bool   mask_end_of_final_string_with_one_at_symbol = true;
+	//                                   Tokenize
+	char                 tokenized_digit_0[] = {"@-----------"};
+	char                 tokenized_digit_1[] = {"@-@---------"};
+	char                 tokenized_digit_2[] = {"@-@@--------"};
+	char                 tokenized_digit_3[] = {"@-@@@-------"};
+	char                 tokenized_digit_4[] = {"@-@@@@------"};
+	char                 tokenized_digit_5[] = {"@-@@@@@-----"};
+	char                 tokenized_digit_6[] = {"@-@@@@@@----"};
+	char                 tokenized_digit_7[] = {"@-@@@@@@@---"};
+	char                 tokenized_digit_8[] = {"@-@@@@@@@@--"};
+	char                 tokenized_digit_9[] = {"@-@@@@@@@@@-"};
+	char tokenized_underscore_as_separator[] = {"@-----------------------------"};
+	bool mask_end_of_final_string_with_one_at_symbol = true;
 	
 	/*////////////////                                        \\\\\\\\\\\\\\\\\\
 	///////////////////////                              \\\\\\\\\\\\\\\\\\\\\\\
@@ -75,7 +75,14 @@ int main()
 	cout << "\nGenerating testing-data...\n";
 	out_stream.open("training-data/raw/test.txt");
 	for(int loops = 0; loops < semiprimes_for_testing;)
-	{	p[0] = ((rand() % 9) + 49); for(int a = 1; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}          //Random p.
+	{	
+		
+		
+		
+		
+		//AFTER MODIFYING THIS BLOCK, COPY IT AND PASTE IT OVER THE SAME BLOCK IN THE SECTION BELOW!
+		//############################################################################################################################################
+		p[0] = ((rand() % 9) + 49); for(int a = 1; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}          //Random p.
 		mpz_set_str(randomness, p, 10); mpz_nextprime(prime_p, randomness); mpz_get_str( p, 10, prime_p);     //p made prime (the smaller one.)
 		if(p[p_length] != '\0') {p[p_length] = '\0'; continue;}                                               //Restarts if p too long.
 		for(;;)
@@ -88,20 +95,33 @@ int main()
 		mpz_mul(product, prime_p, prime_q); mpz_get_str(pq, 10, product);                                     //pq made.
 		int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;}    //Restarts if pq not pq_length.
 		r[0] = ((rand() % 9) + 49); for(int a = 1; a < r_length; a++) {r[a] = ((rand() % 10) + 48);}          //Random r.
-		mpz_set_str(false_r, r, 10); int label = mpz_cmp(false_r, prime_p); if(label == -1) {label++;}        //Gets label; r vs p size.
-		
+		mpz_set_str(false_r, r, 10); int label = mpz_cmp(false_r, prime_p);                                   //Gets label; r vs p size.
+		if(label == 0) {continue;} if(label == -1) {label++;}                                                 //Restarts if r = p.
 		//Saves to file: label, semiprime, break, false candidate, (p * q) reference ignored by tokenizer.
+		//Modify this, but each output text line must be: label of any kind & length without spaces,
+		//space, digits/underscores, then new line (or then space then whatever then new line.)
 		out_stream << label << " " << pq << "_" << r << "   (" << p << " * " << q << ")\n";
+		//############################################################################################################################################
+		
+		
+		
+		
 		
 		loops++; cout << loops << " of " << semiprimes_for_testing << "\n";
 	}
 	out_stream.close();
 	
-	//Training-data (ditto except paths.)
+	//Training-data.
 	cout << "\nGenerating training-data...\n";
 	out_stream.open("training-data/raw/train.txt");
 	for(int loops = 0; loops < semiprimes_for_training;)
-	{	p[0] = ((rand() % 9) + 49); for(int a = 1; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}          //Random p.
+	{	
+		
+		
+		
+		
+		//############################################################################################################################################
+		p[0] = ((rand() % 9) + 49); for(int a = 1; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}          //Random p.
 		mpz_set_str(randomness, p, 10); mpz_nextprime(prime_p, randomness); mpz_get_str( p, 10, prime_p);     //p made prime (the smaller one.)
 		if(p[p_length] != '\0') {p[p_length] = '\0'; continue;}                                               //Restarts if p too long.
 		for(;;)
@@ -114,10 +134,17 @@ int main()
 		mpz_mul(product, prime_p, prime_q); mpz_get_str(pq, 10, product);                                     //pq made.
 		int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;}    //Restarts if pq not pq_length.
 		r[0] = ((rand() % 9) + 49); for(int a = 1; a < r_length; a++) {r[a] = ((rand() % 10) + 48);}          //Random r.
-		mpz_set_str(false_r, r, 10); int label = mpz_cmp(false_r, prime_p); if(label == -1) {label++;}        //Gets label; r vs p size.
-		
+		mpz_set_str(false_r, r, 10); int label = mpz_cmp(false_r, prime_p);                                   //Gets label; r vs p size.
+		if(label == 0) {continue;} if(label == -1) {label++;}                                                 //Restarts if r = p.
 		//Saves to file: label, semiprime, break, false candidate, (p * q) reference ignored by tokenizer.
+		//Modify this, but each output text line must be: label of any kind & length without spaces,
+		//space, digits/underscores, then new line (or then space then whatever then new line.)
 		out_stream << label << " " << pq << "_" << r << "   (" << p << " * " << q << ")\n";
+		//############################################################################################################################################
+		
+		
+		
+		
 		
 		loops++; cout << loops << " of " << semiprimes_for_training << "\n";
 	}
@@ -148,7 +175,8 @@ int main()
 			else if(file_byte == '7') {out_stream << tokenized_digit_7;}
 			else if(file_byte == '8') {out_stream << tokenized_digit_8;}
 			else if(file_byte == '9') {out_stream << tokenized_digit_9;}
-			else if(file_byte == '_') {out_stream << tokenized_break  ;}
+			else if(file_byte == '_') {out_stream << tokenized_underscore_as_separator;}
+			else if(file_byte =='\n') {break                                          ;}
 			else                      {cout << "\n\nError: non-digits present.\n\n"; in_stream.close(); out_stream.close(); return 0;}
 			in_stream.get(file_byte);
 		}
@@ -180,7 +208,8 @@ int main()
 			else if(file_byte == '7') {out_stream << tokenized_digit_7;}
 			else if(file_byte == '8') {out_stream << tokenized_digit_8;}
 			else if(file_byte == '9') {out_stream << tokenized_digit_9;}
-			else if(file_byte == '_') {out_stream << tokenized_break  ;}
+			else if(file_byte == '_') {out_stream << tokenized_underscore_as_separator;}
+			else if(file_byte =='\n') {break                                          ;}
 			else                      {cout << "\n\nError: non-digits present.\n\n"; in_stream.close(); out_stream.close(); return 0;}
 			in_stream.get(file_byte);
 		}
