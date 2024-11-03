@@ -19,8 +19,8 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 
 ```text
 
-                                              factors for you
-   label    semiprime    false candidate    (tokenizer ignores)
+                                           true factors, for you
+   label    semiprime      false factor     (tokenizer ignores)
      |          |               |                    |
 
      1 50595454897434471649_8090636973   (6470808299 * 7819031651)
@@ -76,7 +76,7 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 
 ```text
 
-   label    semiprime                                                                                                                                                                                                                                    underscore means separation            false candidate
+   label    semiprime                                                                                                                                                                                                                                    underscore means separation              false factor
      |          |                                                                                                                                                                                                                                                     |                                |
 
      1 @-@@@@@-----@-----------@-@@@@@-----@-@@@@@@@@@-@-@@@@@-----@-@@@@------@-@@@@@-----@-@@@@------@-@@@@@@@@--@-@@@@@@@@@-@-@@@@@@@---@-@@@@------@-@@@-------@-@@@@------@-@@@@------@-@@@@@@@---@-@---------@-@@@@@@----@-@@@@------@-@@@@@@@@@-@-----------------------------@-@@@@@@@@--@-----------@-@@@@@@@@@-@-----------@-@@@@@@----@-@@@-------@-@@@@@@----@-@@@@@@@@@-@-@@@@@@@---@-@@@-------@
