@@ -9,7 +9,7 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 <br>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/semiprime-training-data/refs/heads/main/Other/Configurable_c1380c45c1331f8af70eac5d89eb0bd1.png">
+  <img src="https://raw.githubusercontent.com/compromise-evident/semiprime-training-data/refs/heads/main/Other/Configurable_c1dfb4231fc6d6512c3024e04c618cd3.png">
 </p>
 
 <br>
@@ -19,8 +19,8 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 
 ```text
 
-                                          actual factors, for you
-   label    semiprime    bad candidate   (ignored upon tokenizing)
+                                              factors for you
+   label    semiprime    false candidate    (tokenizer ignores)
      |          |               |                    |
 
      1 50595454897434471649_8090636973   (6470808299 * 7819031651)
@@ -72,12 +72,12 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 <br>
 <br>
 
-### Tokenized for ML.py
+### Tokenized versions of train.txt & test.txt for ML.py
 
 ```text
 
-   label    semiprime                                                                                                                                                                                                                                                               bad candidate
-     |          |                                                                                                                                                                                                                                                                         |
+   label    semiprime                                                                                                                                                                                                                                    underscore means separation            false candidate
+     |          |                                                                                                                                                                                                                                                     |                                |
 
      1 @-@@@@@-----@-----------@-@@@@@-----@-@@@@@@@@@-@-@@@@@-----@-@@@@------@-@@@@@-----@-@@@@------@-@@@@@@@@--@-@@@@@@@@@-@-@@@@@@@---@-@@@@------@-@@@-------@-@@@@------@-@@@@------@-@@@@@@@---@-@---------@-@@@@@@----@-@@@@------@-@@@@@@@@@-@-----------------------------@-@@@@@@@@--@-----------@-@@@@@@@@@-@-----------@-@@@@@@----@-@@@-------@-@@@@@@----@-@@@@@@@@@-@-@@@@@@@---@-@@@-------@
      1 @-@---------@-@@@@------@-@@--------@-@---------@-@@@@@@@---@-@@@-------@-@@--------@-@@--------@-@@@@------@-@@@@------@-@@--------@-@@@@@@@@@-@-@@@@@@@@--@-@@@-------@-@@@@@-----@-@@@@@@----@-----------@-@@@@@@----@-@@@@@@@@--@-@@@@@@@@@-@-----------------------------@-@@@@@@@@--@-@@--------@-@@@@@-----@-@@@-------@-@@--------@-@@@-------@-@@@@@@----@-----------@-@@@@@-----@-@@@@@-----@
