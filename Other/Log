@@ -2,6 +2,10 @@ semiprime-training-data
 
 
 
+Version 6.0.1   Tokenizer works whether or not something is appended to  "pq_r".
+                Fix for tiny semiprimes: r is never equal to p.
+                Nov 3 2024
+
 Version 6.0.0   Semiprimes followed by values  too big  or  too small  to be the
                 smaller factor. All labeled 1 or 0.  Getting 94.76% correctness.
                 Speed, efficiency, and ease of  modifying to gen for your needs.
