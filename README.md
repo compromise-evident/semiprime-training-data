@@ -138,6 +138,17 @@ In fact, this is where consensus of multiple models
 would be most useful. I'll build an ML.py version
 just for that too. Using my already-available StatMerge.
 
+After the many (unpublished) versions, this one stands out...
+Intuition I had years ago but never though models would cognize.
+The following is why I think a model sees the true factor.
+* Replacing false factor digits with zeros on the right side has no effect on the percent correctness.
+* As soon as any false factor digit is absent, the model fails;
+It doesn't matter what the false factor looks like,
+as long as its length is equal with the true factor,
+then it is the true factor against which any falsehood is compared.
+
+But this version is not where it ends. Waiting for my GPU...
+
 <br>
 <br>
 
