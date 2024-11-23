@@ -147,6 +147,8 @@ It doesn't matter what the false factor looks like,
 as long as its length is equal with the true factor,
 then it is the true factor against which any falsehood is compared.
 
+FYI: the reported percent correctness is achievable even for 260-digit semiprimes
+of 130-digit factors!
 But this version is not where it ends. Waiting for my GPU...
 
 <br>
