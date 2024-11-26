@@ -149,7 +149,8 @@ then it is the true factor against which any falsehood is compared.
 
 FYI: the reported percent correctness is achievable even for 260-digit semiprimes
 of 130-digit factors!
-But this version is not where it ends. Waiting for my GPU...
+But this version is not where it ends.
+I'm now batch-training to leverage that "accumulation" stuff...
 
 <br>
 <br>
