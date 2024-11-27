@@ -1,7 +1,7 @@
 // semiprime-training-data 6.0.1 - generates any semiprimes labeled 1 or 0,             Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
 //                                 depending on if what follows the semiprime           Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
 //                                 is too big or too small to be the smaller
-//                                 factor. Creates raw, and tokenized for ML.py.
+//                                 factor. Creates raw, and tokenized for any ML.
 
 #include <fstream>
 #include <gmp.h>
