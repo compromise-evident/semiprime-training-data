@@ -72,7 +72,7 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 <br>
 <br>
 
-### Tokenized versions of train.txt & test.txt for ML.py
+### Tokenized versions of train.txt & test.txt
 
 ```text
 
