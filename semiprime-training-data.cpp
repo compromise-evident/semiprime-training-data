@@ -155,6 +155,7 @@ int main()
 	
 	
 	//Tokenize test.txt.
+	//Tokenizer works whether or not something is appended to  "pq_r".
 	cout << "\nCreating tokenized versions of the raw test.txt and train.txt...\n";
 	char file_byte;
 	in_stream.open("training-data/raw/test.txt");
