@@ -21,7 +21,7 @@ int main()
 	\\\\\\\\\\\\\\\\\\                                        ////////////////*/
 	
 	//                                  Semiprimes
-	int                             p_length =    10; //50k  max
+	int                             p_length =    10; //50k  max (smaller prime)
 	int                             q_length =    10; //50k  max
 	int                            pq_length =    20; //100k max
 	int               semiprimes_for_testing = 10000; //2B   max
