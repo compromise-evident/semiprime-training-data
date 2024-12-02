@@ -150,12 +150,15 @@ then it is the true factor against which any falsehood is compared.
 FYI: the reported percent correctness is achievable even for 260-digit semiprimes
 of 130-digit factors!
 
+### And >98% correctness
+
 Side-project: If false factor digit 1 does not equal
 smaller factor digit 1, I get >98% correctness.
 Imagine guessing the factor as you would, starting with
 "1402557473". Increase first digit. Once you reach the
 true digit, the model craps out, then picks up again with >98%.
-So, a bit tricky to perform final cryptanalysis, but WORTH looking into further.
+So, a bit tricky to perform final cryptanalysis, but WORTH looking into further,
+so that it's not only the first digit predicted correctly.
 
 <br>
 <br>
