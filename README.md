@@ -121,7 +121,7 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 <br>
 <br>
 
-### focus_only_on_factor_digit_1 = true
+### Set focus_only_on_factor_digit_1 to true
 
 stuff here
 
