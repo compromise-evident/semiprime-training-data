@@ -121,7 +121,7 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 <br>
 <br>
 
-### ML report: 94.76%, and >98% if focus_only_on_factor_digit_1 = true
+### ML report: 94.76%, and 98.24% if focus_only_on_factor_digit_1 = true
 
 By setting focus_only_on_factor_digit_1 to true, the generated
 false factor (r) digit 1 is never equal to the smaller factor (p) digit 1.
