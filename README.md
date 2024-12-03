@@ -121,18 +121,7 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 <br>
 <br>
 
-### ML report: 94.76%, and 98.24% if focus_only_on_factor_digit_1 = true
-
-By setting focus_only_on_factor_digit_1 to true, the generated
-false factor (r) digit 1 is never equal to the smaller factor (p) digit 1.
-It's useful that then models misbehave when fed r with a true digit 1.
-This can be compared against the 98% correctness for the other first digits.
-By using classification occurrence merging + tallies, I can get RSA factors digit 1 by 100%.
-The model is fed the same r multiple times, except its digits after the first are random each time.
-
-Note, if focus_only_on_factor_digit_1 is true, you can still run it through ML.py and get that >98%,
-but you'll need special ML with a special option 4 to predict that first digit for cryptanalysis.
-Tool coming soon.
+### ML report: 94.76%, and 98.425% if test.txt r[0] != p[0]
 
 <br>
 <br>
