@@ -26,7 +26,7 @@ int main()
 	int                            pq_length =    20; //100k max
 	int              semiprimes_for_training = 90000; //2B   max
 	int               semiprimes_for_testing = 10000; //2B   max
-	bool        focus_only_on_factor_digit_1 =  true;
+	bool        focus_only_on_factor_digit_1 = false;
 	
 	//                                   Tokenize
 	char                 tokenized_digit_0[] = {"@-----------"};
