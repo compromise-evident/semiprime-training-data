@@ -130,8 +130,9 @@ This can be compared against the 98% correctness for the other first digits.
 By using classification occurrence merging + tallies, I can get RSA factors digit 1 by 100%.
 The model is fed the same r multiple times, except its digits after the first are random each time.
 
-Note, if focus_only_on_factor_digit_1 is true, you'll need special ML to
-predict that first digit. Tool coming soon.
+Note, if focus_only_on_factor_digit_1 is true, you can still run it through ML.py and get that >98%,
+but you'll need special ML with a special option 4 to predict that first digit for cryptanalysis.
+Tool coming soon.
 
 <br>
 <br>
