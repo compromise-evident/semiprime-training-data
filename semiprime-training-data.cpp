@@ -1,4 +1,4 @@
-// semiprime-training-data 6.0.1 - generates any semiprimes labeled 1 or 0,             Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
+// semiprime-training-data 6.0.2 - generates any semiprimes labeled 1 or 0,             Run it: "apt install g++ geany libgmp-dev". Open the .cpp in Geany.
 //                                 depending on if what follows the semiprime           Append "-lgmp" to Geany's compile & build commands. Hit F9 once. F5 to run.
 //                                 is too big or too small to be the smaller
 //                                 factor. Creates raw, and tokenized for any ML.
@@ -24,8 +24,9 @@ int main()
 	int                             p_length =    10; //50k  max (smaller prime)
 	int                             q_length =    10; //50k  max
 	int                            pq_length =    20; //100k max
-	int               semiprimes_for_testing = 10000; //2B   max
 	int              semiprimes_for_training = 90000; //2B   max
+	int               semiprimes_for_testing = 10000; //2B   max
+	bool        focus_only_on_factor_digit_1 =  true;
 	
 	//                                   Tokenize
 	char                 tokenized_digit_0[] = {"@-----------"};
@@ -62,7 +63,7 @@ int main()
 	srand(time(0));
 	char  p[ 50001] = {'\0'};
 	char  q[ 50001] = {'\0'};
-	char  r[ 50001] = {'\0'};
+	char  r[ 50001] = {'\0'}; //The false factor.
 	char pq[200001] = {'\0'};
 	mpz_t randomness; mpz_init(randomness);
 	mpz_t prime_p   ; mpz_init(prime_p   );
@@ -70,46 +71,6 @@ int main()
 	mpz_t false_r   ; mpz_init(false_r   );
 	mpz_t product   ; mpz_init(product   );
 	int r_length = p_length; if(q_length < p_length) {r_length = q_length;}
-	
-	//Testing-data.
-	cout << "\nGenerating testing-data...\n";
-	out_stream.open("training-data/raw/test.txt");
-	for(int loops = 0; loops < semiprimes_for_testing;)
-	{	
-		
-		
-		
-		
-		//AFTER MODIFYING THIS BLOCK, COPY IT AND PASTE IT OVER THE SAME BLOCK IN THE SECTION BELOW!
-		//############################################################################################################################################
-		p[0] = ((rand() % 9) + 49); for(int a = 1; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}          //Random p.
-		mpz_set_str(randomness, p, 10); mpz_nextprime(prime_p, randomness); mpz_get_str( p, 10, prime_p);     //p made prime (the smaller one.)
-		if(p[p_length] != '\0') {p[p_length] = '\0'; continue;}                                               //Restarts if p too long.
-		for(;;)
-		{	q[0] = ((rand() % 9) + 49); for(; q[0] < p[0];) {q[0] = ((rand() % 9) + 49);}                     //q digit 1 >= p digit 1.
-			for(int a = 1; a < q_length; a++) {q[a] = ((rand() % 10) + 48);}                                  //Random q.
-			mpz_set_str(randomness, q, 10); mpz_nextprime(prime_q, randomness); mpz_get_str( q, 10, prime_q); //q made prime.
-			if(q[q_length] != '\0') {q[q_length] = '\0'; continue;} else {break;}                             //Restarts locally if q too long.
-		}
-		if(mpz_cmp(prime_p, prime_q) != -1) {continue;}                                                       //Restarts if q <= p.
-		mpz_mul(product, prime_p, prime_q); mpz_get_str(pq, 10, product);                                     //pq made.
-		int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;}    //Restarts if pq not pq_length.
-		r[0] = ((rand() % 9) + 49); for(int a = 1; a < r_length; a++) {r[a] = ((rand() % 10) + 48);}          //Random r.
-		mpz_set_str(false_r, r, 10); int label = mpz_cmp(false_r, prime_p);                                   //Gets label; r vs p size.
-		if(label == 0) {continue;} if(label == -1) {label++;}                                                 //Restarts if r = p.
-		//Saves to file: label, semiprime, break, false candidate, (p * q) reference ignored by tokenizer.
-		//Modify this, but each output text line must be: label of any kind & length without spaces,
-		//space, digits/underscores, then new line (or then space then whatever then new line.)
-		out_stream << label << " " << pq << "_" << r << "   (" << p << " * " << q << ")\n";
-		//############################################################################################################################################
-		
-		
-		
-		
-		
-		loops++; cout << loops << " of " << semiprimes_for_testing << "\n";
-	}
-	out_stream.close();
 	
 	//Training-data.
 	cout << "\nGenerating training-data...\n";
@@ -120,7 +81,8 @@ int main()
 		
 		
 		
-		//############################################################################################################################################
+		//AFTER MODIFYING THIS BLOCK, COPY IT AND PASTE IT OVER THE SAME BLOCK IN THE SECTION BELOW!
+		//######################################################################################################################################################
 		p[0] = ((rand() % 9) + 49); for(int a = 1; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}          //Random p.
 		mpz_set_str(randomness, p, 10); mpz_nextprime(prime_p, randomness); mpz_get_str( p, 10, prime_p);     //p made prime (the smaller one.)
 		if(p[p_length] != '\0') {p[p_length] = '\0'; continue;}                                               //Restarts if p too long.
@@ -133,14 +95,12 @@ int main()
 		if(mpz_cmp(prime_p, prime_q) != -1) {continue;}                                                       //Restarts if q <= p.
 		mpz_mul(product, prime_p, prime_q); mpz_get_str(pq, 10, product);                                     //pq made.
 		int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;}    //Restarts if pq not pq_length.
-		r[0] = ((rand() % 9) + 49); for(int a = 1; a < r_length; a++) {r[a] = ((rand() % 10) + 48);}          //Random r.
+		r[0] = ((rand() % 9) + 49); for(int a = 1; a < r_length; a++)  {r[a] = ((rand() % 10) + 48);}         //Random r.
+		if(focus_only_on_factor_digit_1 == true) {for(; r[0] == p[0];) {r[0] = ((rand() %  9) + 49);}}        //If focus on digit 1, r digit 1 != p digit 1.
 		mpz_set_str(false_r, r, 10); int label = mpz_cmp(false_r, prime_p);                                   //Gets label; r vs p size.
 		if(label == 0) {continue;} if(label == -1) {label++;}                                                 //Restarts if r = p.
-		//Saves to file: label, semiprime, break, false candidate, (p * q) reference ignored by tokenizer.
-		//Modify this, but each output text line must be: label of any kind & length without spaces,
-		//space, digits/underscores, then new line (or then space then whatever then new line.)
-		out_stream << label << " " << pq << "_" << r << "   (" << p << " * " << q << ")\n";
-		//############################################################################################################################################
+		out_stream << label << " " << pq << "_" << r << "   (" << p << " * " << q << ")\n";                   //Saves to file (in folder "raw".)
+		//######################################################################################################################################################
 		
 		
 		
@@ -150,12 +110,49 @@ int main()
 	}
 	out_stream.close();
 	
+	//Testing-data.
+	cout << "\nGenerating testing-data...\n";
+	out_stream.open("training-data/raw/test.txt");
+	for(int loops = 0; loops < semiprimes_for_testing;)
+	{	
+		
+		
+		
+		
+		//######################################################################################################################################################
+		p[0] = ((rand() % 9) + 49); for(int a = 1; a < p_length; a++) {p[a] = ((rand() % 10) + 48);}          //Random p.
+		mpz_set_str(randomness, p, 10); mpz_nextprime(prime_p, randomness); mpz_get_str( p, 10, prime_p);     //p made prime (the smaller one.)
+		if(p[p_length] != '\0') {p[p_length] = '\0'; continue;}                                               //Restarts if p too long.
+		for(;;)
+		{	q[0] = ((rand() % 9) + 49); for(; q[0] < p[0];) {q[0] = ((rand() % 9) + 49);}                     //q digit 1 >= p digit 1.
+			for(int a = 1; a < q_length; a++) {q[a] = ((rand() % 10) + 48);}                                  //Random q.
+			mpz_set_str(randomness, q, 10); mpz_nextprime(prime_q, randomness); mpz_get_str( q, 10, prime_q); //q made prime.
+			if(q[q_length] != '\0') {q[q_length] = '\0'; continue;} else {break;}                             //Restarts locally if q too long.
+		}
+		if(mpz_cmp(prime_p, prime_q) != -1) {continue;}                                                       //Restarts if q <= p.
+		mpz_mul(product, prime_p, prime_q); mpz_get_str(pq, 10, product);                                     //pq made.
+		int length = 0; for(int a = 0; pq[a] != '\0'; a++) {length++;} if(length != pq_length) {continue;}    //Restarts if pq not pq_length.
+		r[0] = ((rand() % 9) + 49); for(int a = 1; a < r_length; a++)  {r[a] = ((rand() % 10) + 48);}         //Random r.
+		if(focus_only_on_factor_digit_1 == true) {for(; r[0] == p[0];) {r[0] = ((rand() %  9) + 49);}}        //If focus on digit 1, r digit 1 != p digit 1.
+		mpz_set_str(false_r, r, 10); int label = mpz_cmp(false_r, prime_p);                                   //Gets label; r vs p size.
+		if(label == 0) {continue;} if(label == -1) {label++;}                                                 //Restarts if r = p.
+		out_stream << label << " " << pq << "_" << r << "   (" << p << " * " << q << ")\n";                   //Saves to file (in folder "raw".)
+		//######################################################################################################################################################
+		
+		
+		
+		
+		
+		loops++; cout << loops << " of " << semiprimes_for_testing << "\n";
+	}
+	out_stream.close();
+	
 	
 	
 	
 	
 	//Tokenize test.txt.
-	//Tokenizer works whether or not something is appended to "pq_r" separated by space: "pq_r abc123xyz more stuff".
+	//Tokenizer works whether or not something is appended to "pq_r" separated by space: "pq_r abc123xyz more stuff". Everything after r is ignored due to space.
 	cout << "\nCreating tokenized versions of the raw test.txt and train.txt...\n";
 	char file_byte;
 	in_stream.open("training-data/raw/test.txt");
