@@ -121,46 +121,14 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 <br>
 <br>
 
-### Set focus_only_on_factor_digit_1 to true
+### ML: 94.76%, and >98% if focus_only_on_factor_digit_1 = true
 
-stuff here
-
-<br>
-<br>
-
-### Updates soon
-
-### Report - 94.76% correctness
-
-Obviously, the next objective is to modify ML.py
-to use these false values to zero-in on the smaller
-factor as much as possible, and the last few digits
-will see brute force.
-In fact, this is where consensus of multiple models
-would be most useful. I'll build an ML.py version
-just for that too. Using my already-available StatMerge.
-
-After the many (unpublished) versions, this one stands out...
-Intuition I had years ago but never though models would cognize.
-The following is why I think a model sees the true factor.
-* Replacing false factor digits with zeros on the right side has no effect on the percent correctness.
-* As soon as any false factor digit is absent, the model fails;
-It doesn't matter what the false factor looks like,
-as long as its length is equal with the true factor,
-then it is the true factor against which any falsehood is compared.
-
-FYI: the reported percent correctness is achievable even for 260-digit semiprimes
-of 130-digit factors!
-
-### And >98% correctness
-
-Side-project: If false factor digit 1 does not equal
-smaller factor digit 1, I get >98% correctness.
-Imagine guessing the factor as you would, starting with
-"1402557473". Increase first digit. Once you reach the
-true digit, the model craps out, then picks up again with >98%.
-So, a bit tricky to perform final cryptanalysis, but WORTH looking into further,
-so that it's not only the first digit predicted correctly.
+By setting focus_only_on_factor_digit_1 to true, the generated
+false factor (r) digit 1 is never equal to the smaller factor (p) digit 1.
+It's useful that models misbehave when fed r with a true digit 1.
+This can be compared against the 98% correctness for the other first digits.
+By using occurrence merging + tallies, I can get RSA factors digit 1 by 100%.
+Tool coming soon...
 
 <br>
 <br>
