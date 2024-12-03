@@ -8,13 +8,6 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 <br>
 <br>
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/compromise-evident/semiprime-training-data/refs/heads/main/Other/Configurable_c1dfb4231fc6d6512c3024e04c618cd3.png">
-</p>
-
-<br>
-<br>
-
 ### train.txt & test.txt are the same but of unique items
 
 ```text
@@ -127,6 +120,15 @@ Append ```-lgmp``` to Geany's compile & build commands. Hit F9 once. F5 to run.
 
 <br>
 <br>
+
+### focus_only_on_factor_digit_1 = true
+
+stuff here
+
+<br>
+<br>
+
+### Updates soon
 
 ### Report - 94.76% correctness
 
