@@ -2,6 +2,11 @@ semiprime-training-data
 
 
 
+Version 6.0.2   Added option to focus only on factor digit 1 (>98% correctness.)
+                This will be used in a special ML version to get digit  1 right.
+                See the readme, there's occurrence merging+tallies  just for it.
+                Dec 2 2024
+
 Version 6.0.1   Tokenizer works whether or not something is appended to  "pq_r".
                 Fix for tiny semiprimes: r is never equal to p.
                 Nov 3 2024
