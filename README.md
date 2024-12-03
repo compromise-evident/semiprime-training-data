@@ -129,7 +129,9 @@ It's useful that then models misbehave when fed r with a true digit 1.
 This can be compared against the 98% correctness for the other first digits.
 By using classification occurrence merging + tallies, I can get RSA factors digit 1 by 100%.
 The model is fed the same r multiple times, except its digits after the first are random each time.
-Tool coming soon...
+
+Note, if focus_only_on_factor_digit_1 is true, you'll need special ML to
+predict that first digit. Tool coming soon.
 
 <br>
 <br>
